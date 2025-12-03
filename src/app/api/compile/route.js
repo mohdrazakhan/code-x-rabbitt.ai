@@ -103,14 +103,25 @@ async function runGemini({ problem, sourceCode, judgeResult, language }) {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
     const prompt = `You are an expert coding coach. Analyze the user's submission.\nLanguage: ${language}\nProblem: ${problem?.title || problem?.id || 'N/A'}\nStatement: ${problem?.statement || 'N/A'}\nSource Code:\n\n${sourceCode}\n\nJudge Output:\n${JSON.stringify(judgeResult, null, 2)}\n\n${expectedJsonDesc}\nRespond with ONLY JSON.`;
+    
+    console.log('Calling Gemini API with model: gemini-2.5-flash');
     const res = await model.generateContent(prompt);
     const text = res.response.text();
+    console.log('Gemini API response received, length:', text.length);
+    
     const jsonStart = text.indexOf('{');
     const jsonEnd = text.lastIndexOf('}');
+    
+    if (jsonStart === -1 || jsonEnd === -1) {
+      console.warn('No JSON found in Gemini response');
+      throw new Error('Invalid JSON response from Gemini');
+    }
+    
     const parsed = JSON.parse(text.slice(jsonStart, jsonEnd + 1));
+    console.log('Successfully parsed Gemini response');
     return parsed;
   } catch (e) {
-    console.warn('Gemini API error, using fallback:', e?.message);
+    console.error('Gemini API error:', e?.message, e?.stack);
     return {
       summary: 'AI analysis unavailable. Basic feedback provided.',
       strengths: ['Code structure looks good'],
