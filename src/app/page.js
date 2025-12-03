@@ -1,65 +1,56 @@
-import Image from "next/image";
+import Link from "next/link";
+import HomeCta from "@/components/HomeCta";
+
+function AnimatedCode() {
+  return (
+    <div className="relative w-full h-64 md:h-80 overflow-hidden rounded-xl bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-500">
+      <div className="absolute inset-0 opacity-20" style={{
+        backgroundImage: 'radial-gradient(circle at 20% 20%, #fff 2px, transparent 2px), radial-gradient(circle at 80% 30%, #fff 1.5px, transparent 1.5px), radial-gradient(circle at 40% 70%, #fff 1px, transparent 1px)'
+      }} />
+      <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-3 gap-3 p-4 animate-float">
+        {[...Array(9)].map((_, i) => (
+          <div key={i} className="backdrop-blur-md bg-white/10 border border-white/20 rounded-lg p-3 text-xs text-white">
+            <pre className="whitespace-pre-wrap leading-5">{`// AI Coach hint\n${i%2? 'Use hashmap for O(n).':'Consider edge cases.'}`}</pre>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="max-w-7xl mx-auto px-4 py-12">
+      <section className="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <span className="inline-block px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700 mb-3">Interview prep • Competitive coding</span>
+          <h1 className="text-5xl font-extrabold tracking-tight mb-4">Code smarter with your AI coach</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            Write real code, run in a sandbox, and get instant strengths, weaknesses, and a personalized learning roadmap.
           </p>
+          <HomeCta />
+          <div className="mt-6 flex items-center gap-4 text-xs text-gray-500">
+            <span>Python • Java • C++ • JS</span>
+            <span>Judge0 sandbox</span>
+            <span>Gemini feedback</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <AnimatedCode />
+      </section>
+
+      <section className="mt-16 grid md:grid-cols-3 gap-6">
+        {[
+          { title: 'Practice', desc: 'Curated problems or ask AI for one.' },
+          { title: 'Run & Learn', desc: 'Compile safely. See stdout/stderr/time.' },
+          { title: 'Improve', desc: 'Roadmaps, resources, and next problems.' },
+        ].map((c, i) => (
+          <div key={i} className="rounded-xl border p-5 hover:shadow-sm transition">
+            <div className="text-sm text-blue-600 font-semibold mb-1">Step {i+1}</div>
+            <div className="text-lg font-semibold">{c.title}</div>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{c.desc}</p>
+          </div>
+        ))}
+      </section>
+    </main>
   );
 }
