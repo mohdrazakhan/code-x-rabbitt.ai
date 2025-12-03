@@ -28,7 +28,7 @@ export default function SignUpPage() {
     try {
       const auth = getFirebaseAuth();
       const db = getDb();
-      if (!auth || !db || !isFirebaseConfigured()) {
+      if (!auth || !db || !isFirebaseConfigured) {
         throw new Error("Firebase not configured");
       }
       const cred = await createUserWithEmailAndPassword(auth, email, password);
@@ -58,7 +58,7 @@ export default function SignUpPage() {
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-4">
       <div className="w-full max-w-md border border-neutral-800 rounded-xl p-6 bg-neutral-950">
         <h1 className="text-2xl font-semibold mb-4">Create Account</h1>
-        {!isFirebaseConfigured() && (
+        {!isFirebaseConfigured && (
           <p className="text-sm text-yellow-400 mb-3">
             Firebase is not configured; sign-up will not work.
           </p>

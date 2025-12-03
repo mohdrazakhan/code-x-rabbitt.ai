@@ -53,7 +53,7 @@ export default function ProfilePage() {
       const db = getDb();
       const u = auth?.currentUser;
       if (!db || !u) throw new Error("Not signed in");
-      if (isFirebaseConfigured()) {
+      if (isFirebaseConfigured) {
         await setDoc(
           doc(db, "users", u.uid),
           {

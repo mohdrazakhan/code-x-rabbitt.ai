@@ -37,7 +37,7 @@ export default function SignInPage() {
     setLoading(true);
     try {
       const auth = getFirebaseAuth();
-      if (!auth || !isFirebaseConfigured()) {
+      if (!auth || !isFirebaseConfigured) {
         throw new Error("Firebase not configured");
       }
       await signInWithEmailAndPassword(auth, email, password);
@@ -52,7 +52,7 @@ export default function SignInPage() {
   const handleGoogle = async () => {
     setError("");
     const auth = getFirebaseAuth();
-    if (!auth || !isFirebaseConfigured()) {
+    if (!auth || !isFirebaseConfigured) {
       setError("Firebase not configured");
       return;
     }
@@ -73,7 +73,7 @@ export default function SignInPage() {
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-4">
       <div className="w-full max-w-md border border-neutral-800 rounded-xl p-6 bg-neutral-950">
         <h1 className="text-2xl font-semibold mb-4">Sign In</h1>
-        {!isFirebaseConfigured() && (
+        {!isFirebaseConfigured && (
           <p className="text-sm text-yellow-400 mb-3">
             Firebase is not configured; sign-in will not work.
           </p>
